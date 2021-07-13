@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.DTO.Requests;
 using Demo.AzureConfig.Customers.Api.Services;
+using Demo.AzureConfig.Customers.Api.Services.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.AzureConfig.Customers.Api.Controllers
@@ -15,7 +15,7 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
         {
             _customerSearchService = customerSearchService;
         }
-        
+
         [HttpGet("search/id/{customerId}")]
         public async Task<IActionResult> SearchCustomerByIdAsync([FromRoute] string customerId)
         {

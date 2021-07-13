@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Api.Core;
-using Demo.AzureConfig.Customers.Api.DTO.Requests;
 using Demo.AzureConfig.Customers.Api.Models;
+using Demo.AzureConfig.Customers.Api.Services.Requests;
 
 namespace Demo.AzureConfig.Customers.Api.Services
 {

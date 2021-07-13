@@ -2,7 +2,7 @@ using FluentValidation.Results;
 
 namespace Demo.AzureConfig.Customers.Api.Core
 {
-    public class Result<TData> where TData:class
+    public class Result<TData> where TData : class
     {
         public string ErrorCode { get; set; }
         public ValidationResult ValidationResult { get; set; }
