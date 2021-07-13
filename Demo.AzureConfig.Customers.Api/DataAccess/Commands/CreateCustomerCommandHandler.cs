@@ -28,12 +28,11 @@ namespace Demo.AzureConfig.Customers.Api.DataAccess.Commands
         {
             try
             {
-                var customerId = Guid.NewGuid().ToString("N").ToUpper();
                 var customerDataModel = new CustomerDataModel
                 {
                     PartitionKey = Active.ToUpper(),
-                    RowKey = customerId,
-                    Id = customerId,
+                    RowKey = command.Id,
+                    Id = command.Id,
                     Name = command.Name,
                     Address = command.Address,
                     DateOfBirth = command.DateOfBirth
