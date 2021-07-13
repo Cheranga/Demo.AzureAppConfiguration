@@ -30,6 +30,7 @@ namespace Demo.AzureConfig.Customers.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAzureAppConfiguration();
             services.AddFeatureManagement();
 
             RegisterConfigurations(services);
