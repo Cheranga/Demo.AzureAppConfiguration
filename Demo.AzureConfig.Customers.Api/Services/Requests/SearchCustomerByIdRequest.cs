@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Api.Constants;
 using Demo.AzureConfig.Customers.Api.Core;
+using Demo.AzureConfig.Customers.Api.DataAccess.Models;
 using Demo.AzureConfig.Customers.Api.DataAccess.Queries;
 using Demo.AzureConfig.Customers.Api.Models;
 using FluentValidation;
@@ -17,9 +18,9 @@ namespace Demo.AzureConfig.Customers.Api.Services.Requests
     public class SearchCustomerByIdRequestHandler : IRequestHandler<SearchCustomerByIdRequest, Result<Customer>>
     {
         private readonly IValidator<SearchCustomerByIdRequest> _validator;
-        private readonly IQueryHandler<SearchCustomerByIdQuery, Customer> _queryHandler;
+        private readonly IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel> _queryHandler;
 
-        public SearchCustomerByIdRequestHandler(IValidator<SearchCustomerByIdRequest> validator, IQueryHandler<SearchCustomerByIdQuery, Customer> queryHandler)
+        public SearchCustomerByIdRequestHandler(IValidator<SearchCustomerByIdRequest> validator, IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel> queryHandler)
         {
             _validator = validator;
             _queryHandler = queryHandler;
@@ -41,15 +42,23 @@ namespace Demo.AzureConfig.Customers.Api.Services.Requests
             var operation = await _queryHandler.ExecuteAsync(query);
             if (!operation.Status)
             {
-                return operation;
+                return Result<Customer>.Failure(ErrorCodes.SearchCustomerError,ErrorMessages.SearchCustomerError);
             }
 
-            var customer = operation.Data;
-            if (customer == null)
+            var customerDataModel = operation.Data;
+            if (customerDataModel == null)
             {
                 return Result<Customer>.Failure(ErrorCodes.CustomerNotFound, ErrorMessages.CustomerNotFound);
             }
 
+            var customer = new Customer
+            {
+                Id = customerDataModel.Id,
+                Name = customerDataModel.Name,
+                Address = customerDataModel.Address,
+                DateOfBirth = customerDataModel.DateOfBirth
+            };
+            
             return Result<Customer>.Success(customer);
         }
     }

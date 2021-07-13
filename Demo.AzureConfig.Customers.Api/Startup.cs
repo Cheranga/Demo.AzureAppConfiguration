@@ -1,3 +1,6 @@
+using Demo.AzureConfig.Customers.Api.Configs;
+using Demo.AzureConfig.Customers.Api.DataAccess;
+using Demo.AzureConfig.Customers.Api.DataAccess.Models;
 using Demo.AzureConfig.Customers.Api.DataAccess.Queries;
 using Demo.AzureConfig.Customers.Api.Models;
 using Demo.AzureConfig.Customers.Api.Services;
@@ -26,14 +29,32 @@ namespace Demo.AzureConfig.Customers.Api
         {
             services.AddControllers();
 
-            RegisterServices(services);
+            RegisterConfigurations(services);
+            RegisterDataAccess(services);
+            RegisterCoreServices(services);
             RegisterMediators(services);
             RegisterValidators(services);
         }
 
-        private void RegisterServices(IServiceCollection services)
+        private void RegisterDataAccess(IServiceCollection services)
         {
-            services.AddScoped<IQueryHandler<SearchCustomerByIdQuery, Customer>, SearchCustomerByIdQueryHandler>();
+            services.AddSingleton<ITableStorageFactory, StorageTableFactory>();
+            // Query handlers
+            services.AddScoped<IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel>, SearchCustomerByIdQueryHandler>();
+            // Command handlers
+        }
+
+        private void RegisterConfigurations(IServiceCollection services)
+        {
+            services.AddSingleton(provider =>
+            {
+                var tableConfiguration = Configuration.GetSection(nameof(StorageTableConfiguration)).Get<StorageTableConfiguration>();
+                return tableConfiguration;
+            });
+        }
+
+        private void RegisterCoreServices(IServiceCollection services)
+        {
             services.AddScoped<ICustomerSearchService, CustomerSearchService>();
         }
 
@@ -44,7 +65,10 @@ namespace Demo.AzureConfig.Customers.Api
                 typeof(Startup).Assembly
             };
 
-            services.AddMediatR(assemblies);
+            services.AddMediatR(assemblies, configuration =>
+            {
+                configuration.AsScoped();
+            });
         }
 
         private void RegisterValidators(IServiceCollection services)
