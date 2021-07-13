@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.FeatureManagement;
 
 namespace Demo.AzureConfig.Customers.Api
 {
@@ -29,6 +30,7 @@ namespace Demo.AzureConfig.Customers.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddFeatureManagement();
 
             RegisterConfigurations(services);
             RegisterDataAccess(services);
