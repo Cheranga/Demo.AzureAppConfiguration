@@ -13,6 +13,10 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
             builder.AddAzureAppConfiguration(options =>
             {
                 options.Connect(new Uri(url), credentials)
+                    .ConfigureKeyVault(vaultOptions =>
+                    {
+                        vaultOptions.SetCredential(credentials);
+                    })
                     .ConfigureRefresh(refreshOptions =>
                     {
                         refreshOptions.Register("FeatureManagement").SetCacheExpiration(TimeSpan.FromSeconds(10));

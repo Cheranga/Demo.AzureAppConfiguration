@@ -3,6 +3,7 @@ using Demo.AzureConfig.Customers.Api.DataAccess;
 using Demo.AzureConfig.Customers.Api.DataAccess.Commands;
 using Demo.AzureConfig.Customers.Api.DataAccess.Models;
 using Demo.AzureConfig.Customers.Api.DataAccess.Queries;
+using Demo.AzureConfig.Customers.Api.Messaging;
 using Demo.AzureConfig.Customers.Api.Models;
 using Demo.AzureConfig.Customers.Api.Services;
 using Demo.AzureConfig.Customers.Api.Validators;
@@ -56,11 +57,18 @@ namespace Demo.AzureConfig.Customers.Api
                 var tableConfiguration = Configuration.GetSection(nameof(StorageTableConfiguration)).Get<StorageTableConfiguration>();
                 return tableConfiguration;
             });
+
+            services.AddSingleton(provider =>
+            {
+                var serviceBusConfiguration = Configuration.GetSection(nameof(ServiceBusConfiguration)).Get<ServiceBusConfiguration>();
+                return serviceBusConfiguration;
+            });
         }
 
         private void RegisterCoreServices(IServiceCollection services)
         {
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddSingleton<IMessageSender, CustomerMessageSender>();
         }
 
         private void RegisterMediators(IServiceCollection services)
