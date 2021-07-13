@@ -45,6 +45,8 @@ namespace Demo.AzureConfig.Customers.Api.Messaging
                 var messageData = JsonConvert.SerializeObject(message);
                 var sbMessage = new ServiceBusMessage(messageData);
                 await sender.SendMessageAsync(sbMessage);
+                
+                return Result.Success();
             }
             catch (Exception exception)
             {
