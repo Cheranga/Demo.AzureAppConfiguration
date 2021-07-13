@@ -5,8 +5,9 @@ using Demo.AzureConfig.Customers.Api.Services.Requests;
 
 namespace Demo.AzureConfig.Customers.Api.Services
 {
-    public interface ICustomerSearchService
+    public interface ICustomerService
     {
-        Task<Result<Customer>> SearchAsync(SearchCustomerByIdRequest request);
+        Task<Result<Customer>> SearchCustomerAsync(SearchCustomerByIdRequest request);
+        Task<Result> CreateAsync(CreateCustomerRequest request);
     }
 }

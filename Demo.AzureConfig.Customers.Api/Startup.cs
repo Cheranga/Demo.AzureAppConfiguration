@@ -1,5 +1,6 @@
 using Demo.AzureConfig.Customers.Api.Configs;
 using Demo.AzureConfig.Customers.Api.DataAccess;
+using Demo.AzureConfig.Customers.Api.DataAccess.Commands;
 using Demo.AzureConfig.Customers.Api.DataAccess.Models;
 using Demo.AzureConfig.Customers.Api.DataAccess.Queries;
 using Demo.AzureConfig.Customers.Api.Models;
@@ -42,6 +43,7 @@ namespace Demo.AzureConfig.Customers.Api
             // Query handlers
             services.AddScoped<IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel>, SearchCustomerByIdQueryHandler>();
             // Command handlers
+            services.AddScoped<ICommandHandler<CreateCustomerCommand>, CreateCustomerCommandHandler>();
         }
 
         private void RegisterConfigurations(IServiceCollection services)
@@ -55,7 +57,7 @@ namespace Demo.AzureConfig.Customers.Api
 
         private void RegisterCoreServices(IServiceCollection services)
         {
-            services.AddScoped<ICustomerSearchService, CustomerSearchService>();
+            services.AddScoped<ICustomerService, CustomerService>();
         }
 
         private void RegisterMediators(IServiceCollection services)

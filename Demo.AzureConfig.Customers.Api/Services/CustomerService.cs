@@ -6,17 +6,21 @@ using MediatR;
 
 namespace Demo.AzureConfig.Customers.Api.Services
 {
-    public class CustomerSearchService : ICustomerSearchService
+    public class CustomerService : ICustomerService
     {
         private readonly IMediator _mediator;
 
-        public CustomerSearchService(IMediator mediator)
+        public CustomerService(IMediator mediator)
         {
             _mediator = mediator;
         }
+        public async Task<Result<Customer>> SearchCustomerAsync(SearchCustomerByIdRequest request)
+        {
+            var operation = await _mediator.Send(request);
+            return operation;
+        }
 
-
-        public async Task<Result<Customer>> SearchAsync(SearchCustomerByIdRequest request)
+        public async Task<Result> CreateAsync(CreateCustomerRequest request)
         {
             var operation = await _mediator.Send(request);
             return operation;

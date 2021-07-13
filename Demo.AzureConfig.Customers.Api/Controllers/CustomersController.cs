@@ -9,11 +9,11 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
     [Route("[controller]")]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerSearchService _customerSearchService;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(ICustomerSearchService customerSearchService)
+        public CustomersController(ICustomerService customerService)
         {
-            _customerSearchService = customerSearchService;
+            _customerService = customerService;
         }
 
         [HttpGet("search/id/{customerId}")]
@@ -24,8 +24,15 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
                 Id = customerId
             };
 
-            var operation = await _customerSearchService.SearchAsync(request);
+            var operation = await _customerService.SearchCustomerAsync(request);
             return Ok(operation.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerRequest request)
+        {
+            var operation = await _customerService.CreateAsync(request);
+            return Ok(operation);
         }
     }
 }
