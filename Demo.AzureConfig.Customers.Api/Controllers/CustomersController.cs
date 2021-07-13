@@ -21,6 +21,7 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
         [HttpGet("search/id/{customerId}")]
         public async Task<IActionResult> SearchCustomerByIdAsync([FromRoute] string customerId)
         {
+            // Get the customer by id
             var request = new SearchCustomerByIdRequest
             {
                 Id = customerId
