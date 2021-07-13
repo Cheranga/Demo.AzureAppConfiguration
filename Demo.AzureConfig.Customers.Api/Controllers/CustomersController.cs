@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Demo.AzureConfig.Customers.Api.Constants;
 using Demo.AzureConfig.Customers.Api.Services;
 using Demo.AzureConfig.Customers.Api.Services.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
             _customerService = customerService;
         }
 
-        [FeatureGate("ShowSearchCustomerById")]
+        [FeatureGate(ApplicationFeatures.ShowSearchCustomerById)]
         [HttpGet("search/id/{customerId}")]
         public async Task<IActionResult> SearchCustomerByIdAsync([FromRoute] string customerId)
         {

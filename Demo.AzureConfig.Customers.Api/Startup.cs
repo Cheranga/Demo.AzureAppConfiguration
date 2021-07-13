@@ -94,6 +94,8 @@ namespace Demo.AzureConfig.Customers.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAzureAppConfiguration();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
