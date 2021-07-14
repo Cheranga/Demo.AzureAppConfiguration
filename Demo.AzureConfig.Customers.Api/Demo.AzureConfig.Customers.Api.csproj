@@ -14,5 +14,10 @@
       <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="API" />
+      <Folder Include="Infrastructure" />
+    </ItemGroup>
+
 
 </Project>
