@@ -17,10 +17,10 @@ namespace Demo.AzureConfig.Customers.Api
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(builder =>
+                .ConfigureAppConfiguration((context, builder) =>
                 {
                     var configuration = builder.Build();
-                    builder.RegisterAzureAppConfiguration(configuration);
+                    builder.RegisterAzureAppConfiguration(context, configuration);
                 })
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
