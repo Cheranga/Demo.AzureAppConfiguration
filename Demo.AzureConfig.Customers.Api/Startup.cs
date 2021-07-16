@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using Demo.AzureConfig.Customers.Api.API.Services;
 using Demo.AzureConfig.Customers.Api.Configs;
 using Demo.AzureConfig.Customers.Api.Core.Application.Commands;
@@ -35,10 +36,24 @@ namespace Demo.AzureConfig.Customers.Api
             services.AddFeatureManagement();
 
             RegisterConfigurations(services);
-            RegisterDataAccess(services);
+            RegisterInfrastructure(services);
             RegisterCoreServices(services);
             RegisterMediators(services);
             RegisterValidators(services);
+        }
+
+        private void RegisterInfrastructure(IServiceCollection services)
+        {
+            RegisterDataAccess(services);
+
+            services.AddSingleton(provider =>
+            {
+                var serviceBusConfiguration = Configuration.GetSection(nameof(ServiceBusConfiguration)).Get<ServiceBusConfiguration>();
+                var client = new ServiceBusClient(serviceBusConfiguration.SendOnlyConnectionString);
+                var sender = client.CreateSender(serviceBusConfiguration.Topic);
+
+                return sender;
+            });
         }
 
         private void RegisterDataAccess(IServiceCollection services)

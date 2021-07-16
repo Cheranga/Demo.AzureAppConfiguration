@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
-using Demo.AzureConfig.Customers.Api.Configs;
 using Demo.AzureConfig.Customers.Api.Constants;
 using Demo.AzureConfig.Customers.Api.Core;
 using Microsoft.Extensions.Logging;
@@ -13,16 +12,16 @@ namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
     public class CustomerMessageSender : IMessageSender
     {
         private readonly IFeatureManager _featureManager;
-        private readonly ServiceBusConfiguration _serviceBusConfig;
         private readonly ILogger<CustomerMessageSender> _logger;
+        private readonly ServiceBusSender _messageSender;
 
-        public CustomerMessageSender(IFeatureManager featureManager, ServiceBusConfiguration serviceBusConfig, ILogger<CustomerMessageSender> logger)
+        public CustomerMessageSender(IFeatureManager featureManager, ServiceBusSender messageSender, ILogger<CustomerMessageSender> logger)
         {
             _featureManager = featureManager;
-            _serviceBusConfig = serviceBusConfig;
+            _messageSender = messageSender;
             _logger = logger;
         }
-        
+
         public async Task<Result> SendAsync<TMessage>(TMessage message) where TMessage : class
         {
             try
@@ -33,14 +32,11 @@ namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
                     _logger.LogWarning("message publishing feature is disabled");
                     return Result.Success();
                 }
-                
-                var client = new ServiceBusClient(_serviceBusConfig.SendOnlyConnectionString);
-                var sender = client.CreateSender(_serviceBusConfig.Topic);
 
                 var messageData = JsonConvert.SerializeObject(message);
                 var sbMessage = new ServiceBusMessage(messageData);
-                await sender.SendMessageAsync(sbMessage);
-                
+                await _messageSender.SendMessageAsync(sbMessage);
+
                 return Result.Success();
             }
             catch (Exception exception)
