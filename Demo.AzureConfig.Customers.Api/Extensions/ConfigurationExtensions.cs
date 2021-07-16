@@ -33,6 +33,7 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
             builder.AddAzureAppConfiguration(options =>
             {
                 var azureSharedConfigurationUrl = configuration["AzureSharedConfigurationUrl"];
+                
                 options.Connect(new Uri(azureSharedConfigurationUrl), credentials)
                     .Select(KeyFilter.Any)
                     .Select(KeyFilter.Any, context.HostingEnvironment.EnvironmentName)
@@ -42,7 +43,8 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
                     })
                     .ConfigureRefresh(refreshOptions =>
                     {
-                        refreshOptions.Register("FeatureManagement").SetCacheExpiration(TimeSpan.FromSeconds(10));
+                        // refreshOptions.Register(".appconfig.featureflag", context.HostingEnvironment.EnvironmentName, true).SetCacheExpiration(TimeSpan.FromSeconds(10));
+                        refreshOptions.Register("FeatureManagement", true).SetCacheExpiration(TimeSpan.FromSeconds(10));
                     })
                     .UseFeatureFlags(flagOptions =>
                     {
