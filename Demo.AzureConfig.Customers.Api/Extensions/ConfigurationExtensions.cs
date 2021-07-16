@@ -49,6 +49,7 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
                     .UseFeatureFlags(flagOptions =>
                     {
                         flagOptions.CacheExpirationInterval = TimeSpan.FromSeconds(10);
+                        flagOptions.Label = context.HostingEnvironment.EnvironmentName;
                     });
             });
         }
