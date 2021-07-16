@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Core;
+using Demo.AzureConfig.Customers.Core.Domain;
 
-namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
+namespace Demo.AzureConfig.Customers.Core.Application.Messaging
 {
     public interface IMessageSender
     {

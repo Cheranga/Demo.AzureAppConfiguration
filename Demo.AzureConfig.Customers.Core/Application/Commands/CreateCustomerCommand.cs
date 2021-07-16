@@ -1,6 +1,6 @@
 using System;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Commands
+namespace Demo.AzureConfig.Customers.Core.Application.Commands
 {
     public class CreateCustomerCommand : ICommand
     {

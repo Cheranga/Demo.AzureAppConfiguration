@@ -1,13 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Constants;
-using Demo.AzureConfig.Customers.Api.Core.Application.Queries;
-using Demo.AzureConfig.Customers.Api.Core.Domain.Models;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.Models;
+using Demo.AzureConfig.Customers.Core.Application.Queries;
+using Demo.AzureConfig.Customers.Core.Domain;
+using Demo.AzureConfig.Customers.Core.Domain.Models;
 using FluentValidation;
 using MediatR;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Requests
+namespace Demo.AzureConfig.Customers.Core.Application.Requests
 {
     public class SearchCustomerByIdRequest : IRequest<Result<Customer>>
     {
@@ -17,9 +16,9 @@ namespace Demo.AzureConfig.Customers.Api.Core.Application.Requests
     public class SearchCustomerByIdRequestHandler : IRequestHandler<SearchCustomerByIdRequest, Result<Customer>>
     {
         private readonly IValidator<SearchCustomerByIdRequest> _validator;
-        private readonly IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel> _queryHandler;
+        private readonly IQueryHandler<SearchCustomerByIdQuery, Customer> _queryHandler;
 
-        public SearchCustomerByIdRequestHandler(IValidator<SearchCustomerByIdRequest> validator, IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel> queryHandler)
+        public SearchCustomerByIdRequestHandler(IValidator<SearchCustomerByIdRequest> validator, IQueryHandler<SearchCustomerByIdQuery, Customer> queryHandler)
         {
             _validator = validator;
             _queryHandler = queryHandler;

@@ -16,6 +16,8 @@
 
     <ItemGroup>
       <Folder Include="API" />
+      <Folder Include="Core\Application" />
+      <Folder Include="Core\Domain" />
       <Folder Include="Infrastructure" />
     </ItemGroup>
 

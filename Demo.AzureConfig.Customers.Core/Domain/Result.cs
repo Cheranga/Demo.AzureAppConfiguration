@@ -1,6 +1,6 @@
 using FluentValidation.Results;
 
-namespace Demo.AzureConfig.Customers.Api.Core
+namespace Demo.AzureConfig.Customers.Core.Domain
 {
     public class Result
     {

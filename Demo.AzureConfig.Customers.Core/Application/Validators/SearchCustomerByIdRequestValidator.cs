@@ -1,7 +1,8 @@
-using Demo.AzureConfig.Customers.Api.Core.Application.Requests;
+using Demo.AzureConfig.Customers.Core.Application.Requests;
+using Demo.AzureConfig.Customers.Core.Domain;
 using FluentValidation;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Validators
+namespace Demo.AzureConfig.Customers.Core.Application.Validators
 {
     public class SearchCustomerByIdRequestValidator : ModelValidatorBase<SearchCustomerByIdRequest>
     {

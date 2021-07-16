@@ -1,4 +1,4 @@
-namespace Demo.AzureConfig.Customers.Api.Constants
+namespace Demo.AzureConfig.Customers.Core.Application
 {
     public class ErrorCodes
     {

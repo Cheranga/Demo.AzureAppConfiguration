@@ -1,4 +1,4 @@
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Queries
+namespace Demo.AzureConfig.Customers.Core.Application.Queries
 {
     public class SearchCustomerByIdQuery : IQuery
     {

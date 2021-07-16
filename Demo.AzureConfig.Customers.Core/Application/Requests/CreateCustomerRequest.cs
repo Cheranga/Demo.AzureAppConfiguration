@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Constants;
-using Demo.AzureConfig.Customers.Api.Core.Application.Commands;
-using Demo.AzureConfig.Customers.Api.Core.Application.Messaging;
-using Demo.AzureConfig.Customers.Api.Infrastructure.Messaging;
+using Demo.AzureConfig.Customers.Core.Application.Commands;
+using Demo.AzureConfig.Customers.Core.Application.Messaging;
+using Demo.AzureConfig.Customers.Core.Domain;
 using FluentValidation;
 using MediatR;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Requests
+namespace Demo.AzureConfig.Customers.Core.Application.Requests
 {
     public class CreateCustomerRequest : IRequest<Result>
     {

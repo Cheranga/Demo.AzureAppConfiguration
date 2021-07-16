@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.AzureConfig.Customers.Api", "Demo.AzureConfig.Customers.Api\Demo.AzureConfig.Customers.Api.csproj", "{745959E1-975F-4339-80F3-80DADF3A4D55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.AzureConfig.Customers.Core", "Demo.AzureConfig.Customers.Core\Demo.AzureConfig.Customers.Core.csproj", "{9143B405-A903-4C08-81FD-5319352DF36F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{745959E1-975F-4339-80F3-80DADF3A4D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{745959E1-975F-4339-80F3-80DADF3A4D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{745959E1-975F-4339-80F3-80DADF3A4D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9143B405-A903-4C08-81FD-5319352DF36F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9143B405-A903-4C08-81FD-5319352DF36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9143B405-A903-4C08-81FD-5319352DF36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9143B405-A903-4C08-81FD-5319352DF36F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

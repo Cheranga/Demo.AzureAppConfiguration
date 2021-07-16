@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using Demo.AzureConfig.Customers.Core.Domain;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Application.Commands
+namespace Demo.AzureConfig.Customers.Core.Application.Commands
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {

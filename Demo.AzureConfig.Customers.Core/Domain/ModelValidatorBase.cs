@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Demo.AzureConfig.Customers.Api.Core
+namespace Demo.AzureConfig.Customers.Core.Domain
 {
     public class ModelValidatorBase<TModel> : AbstractValidator<TModel> where TModel : class
     {
