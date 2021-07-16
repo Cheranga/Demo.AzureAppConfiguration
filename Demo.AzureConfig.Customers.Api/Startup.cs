@@ -1,13 +1,6 @@
-using Azure.Messaging.ServiceBus;
 using Demo.AzureConfig.Customers.Api.API.Services;
-using Demo.AzureConfig.Customers.Api.Configs;
-using Demo.AzureConfig.Customers.Api.Core.Application.Commands;
-using Demo.AzureConfig.Customers.Api.Core.Application.Queries;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.CommandHandlers;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.Models;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.QueryHandlers;
-using Demo.AzureConfig.Customers.Api.Infrastructure.Messaging;
+using Demo.AzureConfig.Customers.Core;
+using Demo.AzureConfig.Customers.Infrastructure;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.FeatureManagement;
+using Bootstrapper = Demo.AzureConfig.Customers.Core.Bootstrapper;
 
 namespace Demo.AzureConfig.Customers.Api
 {
@@ -32,78 +26,40 @@ namespace Demo.AzureConfig.Customers.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAzureAppConfiguration();
-            services.AddFeatureManagement();
+            services.AddAzureAppConfiguration()
+                .RegisterCore()
+                .RegisterInfrastructure(Configuration)
+                .AddFeatureManagement();
 
-            RegisterConfigurations(services);
-            RegisterInfrastructure(services);
-            RegisterCoreServices(services);
+            RegisterApiServices(services);
             RegisterMediators(services);
             RegisterValidators(services);
         }
 
-        private void RegisterInfrastructure(IServiceCollection services)
-        {
-            RegisterDataAccess(services);
-
-            services.AddSingleton(provider =>
-            {
-                var serviceBusConfiguration = Configuration.GetSection(nameof(ServiceBusConfiguration)).Get<ServiceBusConfiguration>();
-                var client = new ServiceBusClient(serviceBusConfiguration.SendOnlyConnectionString);
-                var sender = client.CreateSender(serviceBusConfiguration.Topic);
-
-                return sender;
-            });
-        }
-
-        private void RegisterDataAccess(IServiceCollection services)
-        {
-            services.AddSingleton<ITableStorageFactory, StorageTableFactory>();
-            // Query handlers
-            services.AddScoped<IQueryHandler<SearchCustomerByIdQuery, CustomerDataModel>, SearchCustomerByIdQueryHandler>();
-            // Command handlers
-            services.AddScoped<ICommandHandler<CreateCustomerCommand>, CreateCustomerCommandHandler>();
-        }
-
-        private void RegisterConfigurations(IServiceCollection services)
-        {
-            services.AddSingleton(provider =>
-            {
-                var tableConfiguration = Configuration.GetSection(nameof(StorageTableConfiguration)).Get<StorageTableConfiguration>();
-                return tableConfiguration;
-            });
-
-            services.AddSingleton(provider =>
-            {
-                var serviceBusConfiguration = Configuration.GetSection(nameof(ServiceBusConfiguration)).Get<ServiceBusConfiguration>();
-                return serviceBusConfiguration;
-            });
-        }
-
-        private void RegisterCoreServices(IServiceCollection services)
+        private void RegisterApiServices(IServiceCollection services)
         {
             services.AddScoped<ICustomerService, CustomerService>();
-            services.AddSingleton<IMessageSender, CustomerMessageSender>();
         }
 
         private void RegisterMediators(IServiceCollection services)
         {
             var assemblies = new[]
             {
-                typeof(Startup).Assembly
+                typeof(Startup).Assembly,
+                typeof(Bootstrapper).Assembly,
+                typeof(Infrastructure.Bootstrapper).Assembly
             };
 
-            services.AddMediatR(assemblies, configuration =>
-            {
-                configuration.AsScoped();
-            });
+            services.AddMediatR(assemblies, configuration => { configuration.AsScoped(); });
         }
 
         private void RegisterValidators(IServiceCollection services)
         {
             var assemblies = new[]
             {
-                typeof(Startup).Assembly
+                typeof(Startup).Assembly,
+                typeof(Bootstrapper).Assembly,
+                typeof(Infrastructure.Bootstrapper).Assembly
             };
 
             services.AddValidatorsFromAssemblies(assemblies);
@@ -118,7 +74,7 @@ namespace Demo.AzureConfig.Customers.Api
             }
 
             app.UseAzureAppConfiguration();
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

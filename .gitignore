@@ -8,3 +8,19 @@ Demo.AzureConfig.Customers.Api/obj/Debug/netcoreapp3.1/
 Demo.AzureConfig.Customers.Api/obj/
 
 Demo.AzureConfig.Customers.Api/bin/Any CPU/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Core/bin/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Core/obj/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Core/obj/
+
+Demo.AzureConfig.Customers.Infrastructure/bin/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Infrastructure/obj/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Infrastructure/obj/
+
+Demo.AzureConfig.Customers.Core/bin/Any CPU/Debug/netcoreapp3.1/
+
+Demo.AzureConfig.Customers.Infrastructure/bin/Any CPU/Debug/netcoreapp3.1/

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Core;
-using Demo.AzureConfig.Customers.Api.Core.Application.Requests;
-using Demo.AzureConfig.Customers.Api.Core.Domain.Models;
+using Demo.AzureConfig.Customers.Core.Application.Requests;
+using Demo.AzureConfig.Customers.Core.Domain;
+using Demo.AzureConfig.Customers.Core.Domain.Models;
 using MediatR;
 
 namespace Demo.AzureConfig.Customers.Api.API.Services
