@@ -44,7 +44,7 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
                     .ConfigureRefresh(refreshOptions =>
                     {
                         // refreshOptions.Register(".appconfig.featureflag", context.HostingEnvironment.EnvironmentName, true).SetCacheExpiration(TimeSpan.FromSeconds(10));
-                        refreshOptions.Register("FeatureManagement", true).SetCacheExpiration(TimeSpan.FromSeconds(10));
+                        refreshOptions.Register("FeatureManagement", context.HostingEnvironment.EnvironmentName, true).SetCacheExpiration(TimeSpan.FromSeconds(10));
                     })
                     .UseFeatureFlags(flagOptions =>
                     {
