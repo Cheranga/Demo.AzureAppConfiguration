@@ -4,7 +4,6 @@ using Azure.Messaging.ServiceBus;
 using Demo.AzureConfig.Customers.Api.Configs;
 using Demo.AzureConfig.Customers.Api.Constants;
 using Demo.AzureConfig.Customers.Api.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Newtonsoft.Json;
@@ -16,21 +15,19 @@ namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
         private readonly IFeatureManager _featureManager;
         private readonly ServiceBusConfiguration _serviceBusConfig;
         private readonly ILogger<CustomerMessageSender> _logger;
-        private readonly IConfiguration _configuration;
 
-        public CustomerMessageSender(IFeatureManager featureManager, ServiceBusConfiguration serviceBusConfig, ILogger<CustomerMessageSender> logger, IConfiguration configuration)
+        public CustomerMessageSender(IFeatureManager featureManager, ServiceBusConfiguration serviceBusConfig, ILogger<CustomerMessageSender> logger)
         {
             _featureManager = featureManager;
             _serviceBusConfig = serviceBusConfig;
             _logger = logger;
-            _configuration = configuration;
         }
         
         public async Task<Result> SendAsync<TMessage>(TMessage message) where TMessage : class
         {
             try
             {
-                var isAllowed = await _featureManager.IsEnabledAsync(ApplicationFeatures.PublishMessages);
+                var isAllowed = await _featureManager.IsEnabledAsync(ApplicationFeatures.PublishMessages.ToString());
                 if (!isAllowed)
                 {
                     _logger.LogWarning("message publishing feature is disabled");
