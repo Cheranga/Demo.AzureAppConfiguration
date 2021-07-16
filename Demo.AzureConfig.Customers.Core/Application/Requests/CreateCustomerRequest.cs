@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Core.Application.Commands;
 using Demo.AzureConfig.Customers.Core.Application.Messaging;
 using Demo.AzureConfig.Customers.Core.Domain;
+using Demo.AzureConfig.Customers.Core.Domain.Messaging;
 using FluentValidation;
 using MediatR;
 

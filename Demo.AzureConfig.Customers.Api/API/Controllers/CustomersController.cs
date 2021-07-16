@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Api.API.Services;
-using Demo.AzureConfig.Customers.Api.Constants;
-using Demo.AzureConfig.Customers.Api.Core.Application.Requests;
+using Demo.AzureConfig.Customers.Core.Application;
+using Demo.AzureConfig.Customers.Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement.Mvc;
 

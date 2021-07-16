@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Core.Application;
 using Demo.AzureConfig.Customers.Core.Application.Commands;
 using Demo.AzureConfig.Customers.Core.Domain;
+using Demo.AzureConfig.Customers.Infrastructure.Configs;
 using Demo.AzureConfig.Customers.Infrastructure.DataAccess.Models;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;

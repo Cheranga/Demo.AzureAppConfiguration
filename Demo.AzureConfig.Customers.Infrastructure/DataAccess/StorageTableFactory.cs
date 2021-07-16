@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Demo.AzureConfig.Customers.Infrastructure.Configs;
 using Microsoft.Azure.Cosmos.Table;
 
 namespace Demo.AzureConfig.Customers.Infrastructure.DataAccess

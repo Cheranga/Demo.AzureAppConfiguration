@@ -1,6 +1,6 @@
 using System;
 
-namespace Demo.AzureConfig.Customers.Core.Application.Messaging
+namespace Demo.AzureConfig.Customers.Core.Domain.Messaging
 {
     public class CustomerCreatedEvent
     {

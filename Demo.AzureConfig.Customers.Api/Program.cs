@@ -1,8 +1,5 @@
-using System;
-using Azure.Identity;
 using Demo.AzureConfig.Customers.Api.Extensions;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Demo.AzureConfig.Customers.Api

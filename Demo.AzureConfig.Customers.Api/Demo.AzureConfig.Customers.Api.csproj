@@ -6,19 +6,18 @@
 
     <ItemGroup>
       <PackageReference Include="Azure.Identity" Version="1.4.0" />
-      <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.2.1" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.4.0" />
-      <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
       <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.3.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="API" />
-      <Folder Include="Core\Application" />
-      <Folder Include="Core\Domain" />
-      <Folder Include="Infrastructure" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Demo.AzureConfig.Customers.Core\Demo.AzureConfig.Customers.Core.csproj" />
+      <ProjectReference Include="..\Demo.AzureConfig.Customers.Infrastructure\Demo.AzureConfig.Customers.Infrastructure.csproj" />
     </ItemGroup>
 
 

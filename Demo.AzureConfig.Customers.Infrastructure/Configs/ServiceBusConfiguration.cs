@@ -1,4 +1,4 @@
-namespace Demo.AzureConfig.Customers.Api.Configs
+namespace Demo.AzureConfig.Customers.Infrastructure.Configs
 {
     public class ServiceBusConfiguration
     {
