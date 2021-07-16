@@ -1,6 +1,6 @@
 using System;
 
-namespace Demo.AzureConfig.Customers.Api.Core.Domain.Models
+namespace Demo.AzureConfig.Customers.Core.Domain.Models
 {
     public class Customer
     {

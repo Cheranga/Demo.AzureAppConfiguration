@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Configs;
 using Microsoft.Azure.Cosmos.Table;
 
-namespace Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess
+namespace Demo.AzureConfig.Customers.Infrastructure.DataAccess
 {
     public class StorageTableFactory : ITableStorageFactory
     {

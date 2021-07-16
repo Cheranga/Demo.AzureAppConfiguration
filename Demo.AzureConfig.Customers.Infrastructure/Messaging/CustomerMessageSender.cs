@@ -1,13 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
-using Demo.AzureConfig.Customers.Api.Constants;
-using Demo.AzureConfig.Customers.Api.Core;
+using Demo.AzureConfig.Customers.Core.Application;
+using Demo.AzureConfig.Customers.Core.Application.Messaging;
+using Demo.AzureConfig.Customers.Core.Domain;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Newtonsoft.Json;
 
-namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
+namespace Demo.AzureConfig.Customers.Infrastructure.Messaging
 {
     public class CustomerMessageSender : IMessageSender
     {

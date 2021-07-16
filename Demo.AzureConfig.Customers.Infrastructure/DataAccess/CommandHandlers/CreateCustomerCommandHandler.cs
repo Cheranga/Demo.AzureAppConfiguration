@@ -1,15 +1,14 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Demo.AzureConfig.Customers.Api.Configs;
-using Demo.AzureConfig.Customers.Api.Constants;
-using Demo.AzureConfig.Customers.Api.Core;
-using Demo.AzureConfig.Customers.Api.Core.Application.Commands;
-using Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.Models;
+using Demo.AzureConfig.Customers.Core.Application;
+using Demo.AzureConfig.Customers.Core.Application.Commands;
+using Demo.AzureConfig.Customers.Core.Domain;
+using Demo.AzureConfig.Customers.Infrastructure.DataAccess.Models;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.AzureConfig.Customers.Api.Infrastructure.DataAccess.CommandHandlers
+namespace Demo.AzureConfig.Customers.Infrastructure.DataAccess.CommandHandlers
 {
     public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand>
     {
