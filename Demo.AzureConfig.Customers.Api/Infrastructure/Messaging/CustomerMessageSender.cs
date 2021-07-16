@@ -27,7 +27,7 @@ namespace Demo.AzureConfig.Customers.Api.Infrastructure.Messaging
         {
             try
             {
-                var isAllowed = await _featureManager.IsEnabledAsync(ApplicationFeatures.PublishMessages);
+                var isAllowed = await _featureManager.IsEnabledAsync(ApplicationFeatures.PublishMessages.ToString());
                 if (!isAllowed)
                 {
                     _logger.LogWarning("message publishing feature is disabled");
