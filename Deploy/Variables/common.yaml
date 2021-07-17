@@ -3,3 +3,9 @@ variables:
     value: cc-rg-demo-config-$(environmentName)
   - name: rgLocation
     value: Australia Southeast
+  - name: planName
+    value: plan-config-$(environmentName)
+  - name: planSku
+    value: S1
+  - name: planCapacity
+    value: 1
