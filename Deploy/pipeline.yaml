@@ -42,7 +42,8 @@ stages:
     dependsOn: ["Build"]
     jobs:
       - deployment: DEV
-        variables:          
+        variables:    
+          - template: "Variables/common.yaml"      
           - template: "Variables/dev.yaml"
         pool:
           vmImage: ${{variables.vmImage}}
