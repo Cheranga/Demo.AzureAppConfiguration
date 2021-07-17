@@ -1,3 +1,5 @@
 variables:
   - name: rgName
     value: cc-rg-demo-config-$(environmentName)
+  - name: rgLocation
+    value: Australia Southeast
