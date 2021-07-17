@@ -15,7 +15,10 @@ resource azconfig_resource 'Microsoft.AppConfiguration/configurationStores@2021-
 resource appconfigurations 'Microsoft.AppConfiguration/configurationStores/keyValues@2021-03-01-preview'={
   name: 'message'
   properties:{
-    value:'the message'
+    value:'the message$Development'
+    tags:{
+      
+    }
   }
   parent:azconfig_resource
   dependsOn:[
