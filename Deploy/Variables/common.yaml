@@ -12,4 +12,4 @@ variables:
   - name: appInsightsName
     value: ins-config-demo-$(environmentName)
   - name: sgName
-    value: ccsgconfigdemo-$(environmentName)
+    value: ccsgconfigdemo$(environmentName)
