@@ -1,0 +1,3 @@
+variables:
+  - name: rgName
+    value: cc-rg-demo-config-$(environmentName)

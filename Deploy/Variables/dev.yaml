@@ -1,0 +1,7 @@
+variables:
+  - name: environmentName
+    value: dev  
+  - name: apiEnvironment
+    value: Development
+  - name: azureAppConfigUrl
+    value: 'https://appcs-configdemo.azconfig.io'
