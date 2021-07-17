@@ -33,4 +33,5 @@ steps:
         "planCapacity=$(planCapacity)" `
         "planName=$(planName)" `
         "planSku=$(planSku)" `
-        "appInsightsName=$(appInsightsName)"
+        "appInsightsName=$(appInsightsName)" `
+        "sgName=$(sgName)"
