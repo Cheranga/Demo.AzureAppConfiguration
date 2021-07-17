@@ -13,3 +13,5 @@ variables:
     value: ins-config-demo-$(environmentName)
   - name: sgName
     value: ccsgconfigdemo$(environmentName)
+  - name: azConfigName
+    value: appcs-custapi-$(environmentName)

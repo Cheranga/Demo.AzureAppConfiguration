@@ -34,4 +34,5 @@ steps:
         "planName=$(planName)" `
         "planSku=$(planSku)" `
         "appInsightsName=$(appInsightsName)" `
-        "sgName=$(sgName)"
+        "sgName=$(sgName)" `
+        "azConfigName=$(azConfigName)"

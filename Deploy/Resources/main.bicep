@@ -13,6 +13,9 @@ param appInsightsName string
 // Storage account
 param sgName string
 
+// Azure app configuration
+param azConfigName string
+
 
 module aspModule 'AppServicePlan/template.bicep' ={
   name: 'asp-${buildNumber}'
@@ -37,5 +40,13 @@ module storageAccountModule 'StorageAccount/template.bicep'={
   params: {
     location: location
     sgName: sgName    
+  }  
+}
+
+module azAppConfigurationModule 'Configuration/template.bicep'={
+  name: 'azAppConfig-${buildNumber}'
+  params: {
+    azConfigName: azConfigName
+    location: location
   }  
 }
