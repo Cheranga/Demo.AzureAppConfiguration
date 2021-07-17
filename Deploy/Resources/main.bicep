@@ -15,6 +15,7 @@ param sgName string
 
 // Azure app configuration
 param azConfigName string
+param apiEnvironment string
 
 
 module aspModule 'AppServicePlan/template.bicep' ={
@@ -48,5 +49,6 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
   params: {
     azConfigName: azConfigName
     location: location
+    apiEnvironment:apiEnvironment
   }  
 }

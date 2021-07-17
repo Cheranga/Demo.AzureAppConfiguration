@@ -35,4 +35,5 @@ steps:
         "planSku=$(planSku)" `
         "appInsightsName=$(appInsightsName)" `
         "sgName=$(sgName)" `
-        "azConfigName=$(azConfigName)"
+        "azConfigName=$(azConfigName)" `
+        "apiEnvironment=$(apiEnvironment)"
