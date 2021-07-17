@@ -4,6 +4,8 @@ param planCapacity int
 param planName string
 param planSku string
 
+param appInsightsName string
+
 
 module aspModule 'AppServicePlan/template.bicep' ={
   name: 'asp-${buildNumber}'
@@ -13,4 +15,13 @@ module aspModule 'AppServicePlan/template.bicep' ={
     planName: planName
     sku: planSku
   }  
+}
+
+module appInsightsModule 'AppInsights/template.bicep'={
+  name: 'appins-${buildNumber}'
+  params: {
+    appInsightsName: appInsightsName 
+    location: location
+  }
+  
 }

@@ -9,3 +9,5 @@ variables:
     value: S1
   - name: planCapacity
     value: 1
+  - name: appInsightsName
+    value: ins-config-demo-$(environmentName)

@@ -32,4 +32,5 @@ steps:
         "location=$(rgLocation)" `
         "planCapacity=$(planCapacity)" `
         "planName=$(planName)" `
-        "planSku=$(planSku)"
+        "planSku=$(planSku)" `
+        "appInsightsName=$(appInsightsName)"
