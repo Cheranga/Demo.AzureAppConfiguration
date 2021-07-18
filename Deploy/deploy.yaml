@@ -49,11 +49,19 @@ steps:
       scriptLocation: "inlineScript"
       inlineScript: |
         $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"
+        # echo $azConfigDeployment
         $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigPrincipalId.value)
         
+        # echo $appConfigId
+
         $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
+        # echo $apiDeployment
+
         $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
         $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
         
-        az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
-        az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
+        # echo $apiProductionId
+        # echo $apiStagingId
+
+        # az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
+        # az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
