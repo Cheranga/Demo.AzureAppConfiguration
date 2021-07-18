@@ -59,3 +59,43 @@ steps:
         
         az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
         az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
+
+  - task: AzureRmWebAppDeployment@3
+    displayName: "Deploy to Staging"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      WebAppName: "cc-app-$(apiName)-$(environmentName)"
+      DeployToSlotFlag: true
+      ResourceGroupName: "$(rgName)"
+      SlotName: staging
+      Package: "$(Pipeline.Workspace)/WebApp/Demo.AzureConfig.Customers.zip"
+      ScriptType: "Inline Script"
+      enableXmlVariableSubstitution: true
+
+  - task: AzureAppServiceManage@0
+    displayName: "Start Staging Slot"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      action: "Start Azure App Service"
+      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      specifySlotOrASE: true
+      resourceGroupName: "$(rgName)"
+      slot: staging
+
+  - task: AzureAppServiceManage@0
+    displayName: "Swap to Production"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      resourceGroupName: "$(rgName)"
+      sourceSlot: staging
+
+  - task: AzureAppServiceManage@0
+    displayName: "Stop Staging Slot"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      action: "Stop Azure App Service"
+      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      specifySlotOrASE: true
+      resourceGroupName: "$(rgName)"
+      slot: staging        
