@@ -1,4 +1,5 @@
 variables:
+  - group: CCSharedGroup
   - name: environmentName
     value: dev  
   - name: apiEnvironment

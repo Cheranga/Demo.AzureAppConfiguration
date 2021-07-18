@@ -39,6 +39,7 @@ steps:
         "azConfigName=$(azConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
         "keyVaultName=$(keyVaultName)" `
+        "sendOnlyServiceBusConnectionString=$(sendOnlyServiceBusConnectionString)" `
         "apiName=$(apiName)" `
         "azureConfigDataReader=$(azureConfigDataReader)"
 

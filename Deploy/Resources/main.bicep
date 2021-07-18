@@ -20,6 +20,9 @@ param azConfigName string
 // Key vault
 param keyVaultName string
 
+@secure()
+param sendOnlyServiceBusConnectionString string
+
 
 // Customers API
 param apiEnvironment string
@@ -81,6 +84,7 @@ module akvModule 'KeyVault/template.bicep'={
     location: location
     storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
     tenantId: subscription().tenantId
+    sendOnlyServiceBusConnectionString:sendOnlyServiceBusConnectionString
   }
   dependsOn:[
     azAppConfigurationModule
