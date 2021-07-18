@@ -43,3 +43,5 @@ resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2
     azconfig_resource
   ]
 }
+
+output azConfigPrincipalId string = azconfig_resource.identity.principalId

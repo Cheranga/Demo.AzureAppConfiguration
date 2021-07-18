@@ -11,3 +11,5 @@ resource appInsights_resource 'Microsoft.Insights/components@2020-02-02'={
     Flow_Type:'Bluefield'
   }
 }
+
+output appInsightsKey string = appInsights_resource.properties.InstrumentationKey

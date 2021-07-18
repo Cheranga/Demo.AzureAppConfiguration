@@ -1,4 +1,5 @@
 // Common
+param rgName string
 param buildNumber string
 param location string
 
@@ -15,7 +16,15 @@ param sgName string
 
 // Azure app configuration
 param azConfigName string
+
+// Key vault
+param keyVaultName string
+
+
+// Customers API
 param apiEnvironment string
+param apiName string
+var apiConfigUrl = 'https://${azConfigName}.azconfig.io'
 
 
 module aspModule 'AppServicePlan/template.bicep' ={
@@ -42,6 +51,36 @@ module storageAccountModule 'StorageAccount/template.bicep'={
     location: location
     sgName: sgName    
   }  
+}
+
+module apiModule 'API/template.bicep'={
+  name: 'customersapi-${buildNumber}'
+  params: {
+    apiConfigUrl: apiConfigUrl
+    apiEnvironment: apiEnvironment
+    apiLocation: location
+    apiName: apiName
+    appInsightsKey: appInsightsModule.outputs.appInsightsKey
+    planName: planName
+    rgName: rgName
+  }
+  dependsOn:[
+    aspModule
+  ]  
+}
+
+module akvModule 'KeyVault/template.bicep'={
+  name: 'akv-${buildNumber}'
+  params: {
+    appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
+    keyVaultName: keyVaultName
+    location: location
+    storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
+    tenantId: subscription().tenantId
+  }
+  dependsOn:[
+    azAppConfigurationModule
+  ]  
 }
 
 module azAppConfigurationModule 'Configuration/template.bicep'={

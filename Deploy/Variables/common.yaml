@@ -15,3 +15,7 @@ variables:
     value: ccsgconfigdemo$(environmentName)
   - name: azConfigName
     value: appcs-custapi-$(environmentName)
+  - name: keyVaultName
+    value: kv-azconfig-$(environmentName)
+  - name: apiName
+    value: cc-demo-customersapi-$(environmentName)

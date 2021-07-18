@@ -36,4 +36,6 @@ steps:
         "appInsightsName=$(appInsightsName)" `
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
-        "apiEnvironment=$(apiEnvironment)"
+        "apiEnvironment=$(apiEnvironment)" `
+        "keyVaultName=$(keyVaultName)" `
+        "apiName=$(apiName)"
