@@ -45,3 +45,4 @@ resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2
 }
 
 output azConfigPrincipalId string = azconfig_resource.identity.principalId
+output azConfigResourceId string = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.AppConfiguration/configurationStores/${azConfigName}'

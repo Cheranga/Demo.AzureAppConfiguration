@@ -96,15 +96,15 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
   }  
 }
 
-module roleAssignmentModule 'RoleAssignments/template.bicep'={
-  name: 'rbac-${buildNumber}'
-  params: {
-    principalId: apiModule.outputs.productionApiPrincipalId
-    roleDefinitionID: azureConfigDataReader
-    scopeId: resourceGroup().id
-  }
-  dependsOn:[
-    apiModule
-    azAppConfigurationModule
-  ]
-}
+// module roleAssignmentModule 'RoleAssignments/template.bicep'={
+//   name: 'rbac-${buildNumber}'
+//   params: {
+//     principalId: apiModule.outputs.productionApiPrincipalId
+//     roleDefinitionID: azureConfigDataReader
+//     scopeId: resourceGroup().id
+//   }
+//   dependsOn:[
+//     apiModule
+//     azAppConfigurationModule
+//   ]
+// }
