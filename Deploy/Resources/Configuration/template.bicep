@@ -50,6 +50,20 @@ resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2
   ]
 }
 
+// Key vault references
+resource kvStorageConnectionString 'Microsoft.AppConfiguration/configurationStores/keyValues@2020-07-01-preview'={
+  name: 'StorageTableConfiguration:ConnectionString'
+  parent:azconfig_resource
+  properties:{
+    value:dbConnectionStringSecret.properties.secretUri
+    contentType: 'application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8'
+  }
+  dependsOn:[
+    azconfig_resource
+    dbConnectionStringSecret
+  ]
+}
+
 resource keyVault 'Microsoft.KeyVault/vaults@2016-10-01' = {
   name: keyVaultName
   location: location
