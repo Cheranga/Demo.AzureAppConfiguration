@@ -26,6 +26,9 @@ param apiEnvironment string
 param apiName string
 var apiConfigUrl = 'https://${azConfigName}.azconfig.io'
 
+// Role assignment
+param azureConfigDataReader string
+
 
 module aspModule 'AppServicePlan/template.bicep' ={
   name: 'asp-${buildNumber}'
@@ -66,6 +69,7 @@ module apiModule 'API/template.bicep'={
   }
   dependsOn:[
     aspModule
+    azAppConfigurationModule
   ]  
 }
 
@@ -90,4 +94,17 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     location: location
     apiEnvironment:apiEnvironment
   }  
+}
+
+module roleAssignmentModule 'RoleAssignments/template.bicep'={
+  name: 'rbac-${buildNumber}'
+  params: {
+    principalId: apiModule.outputs.productionApiPrincipalId
+    roleDefinitionID: azureConfigDataReader
+    scopeId: azAppConfigurationModule.outputs.azConfigPrincipalId
+  }
+  dependsOn:[
+    apiModule
+    azAppConfigurationModule
+  ]
 }

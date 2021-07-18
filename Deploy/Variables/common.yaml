@@ -19,3 +19,5 @@ variables:
     value: kv-azconfig-$(environmentName)
   - name: apiName
     value: cc-demo-customersapi-$(environmentName)
+  - name: azureConfigDataReader
+    value: '516239f1-63e1-4d78-a4de-a74fb236a071'

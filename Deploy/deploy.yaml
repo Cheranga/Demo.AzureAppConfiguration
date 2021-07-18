@@ -39,29 +39,30 @@ steps:
         "azConfigName=$(azConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
         "keyVaultName=$(keyVaultName)" `
-        "apiName=$(apiName)"
+        "apiName=$(apiName)" `
+        "azureConfigDataReader=$(azureConfigDataReader)"
 
-  - task: AzureCLI@2    
-    displayName: "Set access to read Azure configurations"
-    inputs:
-      azureSubscription: "$(azureSubscription)"
-      scriptType: "pscore"
-      scriptLocation: "inlineScript"
-      inlineScript: |
-        $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"
-        echo $azConfigDeployment
-        $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigPrincipalId.value)
+  # - task: AzureCLI@2    
+  #   displayName: "Set access to read Azure configurations"
+  #   inputs:
+  #     azureSubscription: "$(azureSubscription)"
+  #     scriptType: "pscore"
+  #     scriptLocation: "inlineScript"
+  #     inlineScript: |
+  #       $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"
+  #       echo $azConfigDeployment
+  #       $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigPrincipalId.value)
         
-        echo $appConfigId
+  #       echo $appConfigId
 
-        $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
-        echo $apiDeployment
+  #       $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
+  #       echo $apiDeployment
 
-        $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
-        $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
+  #       $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
+  #       $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
         
-        echo $apiProductionId
-        echo $apiStagingId
+  #       echo $apiProductionId
+  #       echo $apiStagingId
 
-        az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
-        az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
+  #       az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
+  #       az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
