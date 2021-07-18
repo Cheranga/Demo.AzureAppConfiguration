@@ -101,7 +101,7 @@ module roleAssignmentModule 'RoleAssignments/template.bicep'={
   params: {
     principalId: apiModule.outputs.productionApiPrincipalId
     roleDefinitionID: azureConfigDataReader
-    scopeId: azAppConfigurationModule.outputs.azConfigPrincipalId
+    scopeId: resourceGroup().id
   }
   dependsOn:[
     apiModule
