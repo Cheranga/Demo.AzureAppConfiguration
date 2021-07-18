@@ -74,7 +74,7 @@ steps:
       DeployToSlotFlag: true
       ResourceGroupName: "$(rgName)"
       SlotName: staging
-      Package: "$(Pipeline.Workspace)/WebApp/Demo.AzureConfig.Customers.zip"
+      Package: "$(Pipeline.Workspace)/WebApp/Demo.AzureConfig.Customers.Api.zip"
       ScriptType: "Inline Script"
       enableXmlVariableSubstitution: true
 
