@@ -38,7 +38,7 @@ steps:
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
-        "keyVaultName=$(keyVaultName)" `  
+        "keyVaultName=$(keyVaultName)" `
         "apiName=$(apiName)"
         
 
