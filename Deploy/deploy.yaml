@@ -38,10 +38,9 @@ steps:
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
-        "keyVaultName=$(keyVaultName)" `
-        "sendOnlyServiceBusConnectionString=$(sendOnlyServiceBusConnectionString)" `
-        "apiName=$(apiName)" `
-        "azureConfigDataReader=$(azureConfigDataReader)"
+        "keyVaultName=$(keyVaultName)" `  
+        "apiName=$(apiName)"
+        
 
   - task: AzureCLI@2    
     displayName: "Set access to read Azure configurations"

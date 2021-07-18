@@ -6,8 +6,6 @@ param appConfigPrincipalId string
 @secure()
 param storageConnectionString string
 
-@secure()
-param sendOnlyServiceBusConnectionString string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2016-10-01' = {
   name: keyVaultName
@@ -47,18 +45,4 @@ resource dbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01'
   ]
 }
 
-resource sendOnlyServiceBusConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
-  name: '${keyVaultName}/sendOnlyServiceBusConnectionString'
-  properties: {
-    value: sendOnlyServiceBusConnectionString
-  }
-  dependsOn:[
-    keyVault
-  ]
-}
-
 output dbConnectionStringUri string = dbConnectionStringSecret.properties.secretUri
-output sendOnlySecretUrl string = sendOnlyServiceBusConnectionStringSecret.properties.secretUri
-
-
-

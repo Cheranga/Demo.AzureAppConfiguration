@@ -20,17 +20,10 @@ param azConfigName string
 // Key vault
 param keyVaultName string
 
-@secure()
-param sendOnlyServiceBusConnectionString string
-
-
 // Customers API
 param apiEnvironment string
 param apiName string
 var apiConfigUrl = 'https://${azConfigName}.azconfig.io'
-
-// Role assignment
-param azureConfigDataReader string
 
 
 module aspModule 'AppServicePlan/template.bicep' ={
@@ -84,7 +77,6 @@ module akvModule 'KeyVault/template.bicep'={
     location: location
     storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
     tenantId: subscription().tenantId
-    sendOnlyServiceBusConnectionString:sendOnlyServiceBusConnectionString
   }
   dependsOn:[
     azAppConfigurationModule
