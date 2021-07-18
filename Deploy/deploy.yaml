@@ -29,6 +29,7 @@ steps:
         --resource-group "$(rgName)" `
         --template-file "$(Pipeline.Workspace)/deploy/main.bicep" `
         --parameters "buildNumber=$(Build.BuildNumber)" `
+        "rgName=$(rgName)" `
         "location=$(rgLocation)" `
         "planCapacity=$(planCapacity)" `
         "planName=$(planName)" `
