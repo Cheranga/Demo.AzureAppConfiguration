@@ -20,17 +20,10 @@ param azConfigName string
 // Key vault
 param keyVaultName string
 
-@secure()
-param sendOnlyServiceBusConnectionString string
-
-
 // Customers API
 param apiEnvironment string
 param apiName string
 var apiConfigUrl = 'https://${azConfigName}.azconfig.io'
-
-// Role assignment
-param azureConfigDataReader string
 
 
 module aspModule 'AppServicePlan/template.bicep' ={
@@ -76,20 +69,19 @@ module apiModule 'API/template.bicep'={
   ]  
 }
 
-module akvModule 'KeyVault/template.bicep'={
-  name: 'akv-${buildNumber}'
-  params: {
-    appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
-    keyVaultName: keyVaultName
-    location: location
-    storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
-    tenantId: subscription().tenantId
-    sendOnlyServiceBusConnectionString:sendOnlyServiceBusConnectionString
-  }
-  dependsOn:[
-    azAppConfigurationModule
-  ]  
-}
+// module akvModule 'KeyVault/template.bicep'={
+//   name: 'akv-${buildNumber}'
+//   params: {
+//     appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
+//     keyVaultName: keyVaultName
+//     location: location
+//     storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
+//     tenantId: subscription().tenantId
+//   }
+//   dependsOn:[
+//     azAppConfigurationModule
+//   ]  
+// }
 
 module azAppConfigurationModule 'Configuration/template.bicep'={
   name: 'azAppConfig-${buildNumber}'
@@ -97,18 +89,23 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     azConfigName: azConfigName
     location: location
     apiEnvironment:apiEnvironment
-  }  
+    keyVaultName:keyVaultName
+    storageConnectionString:storageAccountModule.outputs.storageAccountConnectionString
+    tenantId:subscription().tenantId
+  }
+  dependsOn:[
+    storageAccountModule
+  ]
 }
 
 // module roleAssignmentModule 'RoleAssignments/template.bicep'={
 //   name: 'rbac-${buildNumber}'
 //   params: {
-//     principalId: apiModule.outputs.productionApiPrincipalId
-//     roleDefinitionID: azureConfigDataReader
-//     scopeId: azAppConfigurationModule.outputs.azConfigResourceId
+//     configStoreName:azConfigName
+//     storageConnectionStringUri:akvModule.outputs.dbConnectionStringUri
 //   }
 //   dependsOn:[
-//     apiModule
+//     akvModule
 //     azAppConfigurationModule
 //   ]
 // }

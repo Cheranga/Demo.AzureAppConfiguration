@@ -1,6 +1,11 @@
 param azConfigName string
 param location string
 param apiEnvironment string
+param keyVaultName string
+param tenantId string
+
+@secure()
+param storageConnectionString string
 
 var featureFlagValue = {
   id: 'searchCustomerById'
@@ -8,6 +13,7 @@ var featureFlagValue = {
   enabled: true
 }
 
+// Azure app configuration
 resource azconfig_resource 'Microsoft.AppConfiguration/configurationStores@2021-03-01-preview'={
   name: azConfigName
   location: location
@@ -31,6 +37,20 @@ resource appconfigurations 'Microsoft.AppConfiguration/configurationStores/keyVa
   ]
 }
 
+// Key vault references
+resource kvStorageConnectionString 'Microsoft.AppConfiguration/configurationStores/keyValues@2020-07-01-preview'={
+  name: 'StorageTableConfiguration:ConnectionString'
+  parent:azconfig_resource
+  properties:{
+    value:dbConnectionStringSecret.properties.secretUri
+    contentType: 'application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8'
+  }
+  dependsOn:[
+    azconfig_resource
+    dbConnectionStringSecret
+  ]
+}
+
 // Feature flags
 resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2021-03-01-preview'={
   name: '.appconfig.featureflag~2f${featureFlagValue.id}$${apiEnvironment}'
@@ -41,6 +61,48 @@ resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2
   parent:azconfig_resource
   dependsOn:[
     azconfig_resource
+  ]
+}
+
+// AKV
+resource keyVault 'Microsoft.KeyVault/vaults@2016-10-01' = {
+  name: keyVaultName
+  location: location
+  properties: {
+    enabledForDeployment: true
+    enabledForTemplateDeployment: true
+    enabledForDiskEncryption: true
+    tenantId: tenantId
+    accessPolicies: [
+      {
+        tenantId: tenantId
+        objectId: azconfig_resource.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+          ]
+        }
+      }      
+    ]
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
+  }
+  dependsOn:[
+    azconfig_resource
+  ]
+}
+
+
+resource dbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+  name: '${keyVaultName}/storageConnectionString'
+  properties: {
+    value: storageConnectionString
+  }
+  dependsOn:[
+    keyVault
   ]
 }
 
