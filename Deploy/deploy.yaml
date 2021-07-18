@@ -37,6 +37,8 @@ steps:
         "appInsightsName=$(appInsightsName)" `
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
+        "commonRgName=$(commonRgName)" `
+        "commonAzConfigName=$(commonAzConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
         "keyVaultName=$(keyVaultName)" `
         "apiName=$(apiName)"
@@ -51,6 +53,7 @@ steps:
       inlineScript: |        
         $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"        
         $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigResourceId.value)
+        $commonAppConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigCommonResourceId.value)
         
         $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
         
@@ -60,11 +63,14 @@ steps:
         az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
         az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
 
+        az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $commonAppConfigId
+        az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $commonAppConfigId
+
   - task: AzureRmWebAppDeployment@3
     displayName: "Deploy to Staging"
     inputs:
       azureSubscription: "$(azureSubscription)"
-      WebAppName: "cc-app-$(apiName)-$(environmentName)"
+      WebAppName: "cc-demo-customersapi-$(environmentName)"
       DeployToSlotFlag: true
       ResourceGroupName: "$(rgName)"
       SlotName: staging
@@ -77,7 +83,7 @@ steps:
     inputs:
       azureSubscription: "$(azureSubscription)"
       action: "Start Azure App Service"
-      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      webAppName: "cc-demo-customersapi-$(environmentName)"
       specifySlotOrASE: true
       resourceGroupName: "$(rgName)"
       slot: staging
@@ -86,7 +92,7 @@ steps:
     displayName: "Swap to Production"
     inputs:
       azureSubscription: "$(azureSubscription)"
-      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      webAppName: "cc-demo-customersapi-$(environmentName)"
       resourceGroupName: "$(rgName)"
       sourceSlot: staging
 
@@ -95,7 +101,7 @@ steps:
     inputs:
       azureSubscription: "$(azureSubscription)"
       action: "Stop Azure App Service"
-      webAppName: "cc-app-$(apiName)-$(environmentName)"
+      webAppName: "cc-demo-customersapi-$(environmentName)"
       specifySlotOrASE: true
       resourceGroupName: "$(rgName)"
       slot: staging        

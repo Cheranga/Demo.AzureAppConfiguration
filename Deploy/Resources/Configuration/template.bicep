@@ -2,6 +2,8 @@ param azConfigName string
 param location string
 param apiEnvironment string
 param keyVaultName string
+param commonRgName string
+param commonAzConfigName string
 
 @secure()
 param storageConnectionString string
@@ -110,3 +112,4 @@ resource dbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01'
 output dbConnectionStringUri string = dbConnectionStringSecret.properties.secretUri
 output azConfigPrincipalId string = azconfig_resource.identity.principalId
 output azConfigResourceId string = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.AppConfiguration/configurationStores/${azConfigName}'
+output azConfigCommonResourceId string = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${commonRgName}/providers/Microsoft.AppConfiguration/configurationStores/${commonAzConfigName}'

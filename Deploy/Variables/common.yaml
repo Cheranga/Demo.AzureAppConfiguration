@@ -21,3 +21,7 @@ variables:
     value: cc-demo-customersapi-$(environmentName)
   - name: azureConfigDataReader
     value: '516239f1-63e1-4d78-a4de-a74fb236a071'
+  - name: commonRgName
+    value: rg-azureconfig-demo
+  - name: commonAzConfigName
+    value: appcs-shared-demo 

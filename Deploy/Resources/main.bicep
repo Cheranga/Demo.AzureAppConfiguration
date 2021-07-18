@@ -15,6 +15,8 @@ param appInsightsName string
 param sgName string
 
 // Azure app configuration
+param commonRgName string
+param commonAzConfigName string
 param azConfigName string
 
 // Key vault
@@ -91,6 +93,8 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     apiEnvironment:apiEnvironment
     keyVaultName:keyVaultName
     storageConnectionString:storageAccountModule.outputs.storageAccountConnectionString
+    commonRgName:commonRgName
+    commonAzConfigName:commonAzConfigName
   }
   dependsOn:[
     storageAccountModule
