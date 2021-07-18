@@ -67,7 +67,6 @@ module apiModule 'API/template.bicep'={
   }
   dependsOn:[
     aspModule
-    azAppConfigurationModule
   ]  
 }
 
@@ -95,9 +94,12 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     storageConnectionString:storageAccountModule.outputs.storageAccountConnectionString
     commonRgName:commonRgName
     commonAzConfigName:commonAzConfigName
+    prodWebAppId:apiModule.outputs.productionApiPrincipalId
+    stagingWebAppId:apiModule.outputs.stagingApiPrincipalId
   }
   dependsOn:[
     storageAccountModule
+    apiModule
   ]
 }
 

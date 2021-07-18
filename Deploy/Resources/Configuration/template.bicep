@@ -4,6 +4,8 @@ param apiEnvironment string
 param keyVaultName string
 param commonRgName string
 param commonAzConfigName string
+param prodWebAppId string
+param stagingWebAppId string
 
 @secure()
 param storageConnectionString string
@@ -80,6 +82,26 @@ resource keyVault 'Microsoft.KeyVault/vaults@2016-10-01' = {
       {
         tenantId: tenantId
         objectId: azconfig_resource.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+          ]
+        }
+      }
+      {
+        tenantId: tenantId
+        objectId: prodWebAppId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+          ]
+        }
+      }
+      {
+        tenantId: tenantId
+        objectId: stagingWebAppId
         permissions: {
           secrets: [
             'get'
