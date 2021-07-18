@@ -55,7 +55,9 @@ resource kvStorageConnectionString 'Microsoft.AppConfiguration/configurationStor
   name: 'StorageTableConfiguration:ConnectionString'
   parent:azconfig_resource
   properties:{
-    value:string({uri:dbConnectionStringSecret.properties.secretUri})
+    value:string({
+      uri:dbConnectionStringSecret.properties.secretUri
+    })
     contentType: 'application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8'
   }
   dependsOn:[
