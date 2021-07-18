@@ -49,6 +49,7 @@ steps:
       scriptType: "pscore"
       scriptLocation: "inlineScript"
       inlineScript: |
+        echo $(azureSubscription)
         $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"
         echo $azConfigDeployment
         $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigResourceId.value)
