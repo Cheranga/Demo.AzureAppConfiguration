@@ -69,19 +69,19 @@ module apiModule 'API/template.bicep'={
   ]  
 }
 
-module akvModule 'KeyVault/template.bicep'={
-  name: 'akv-${buildNumber}'
-  params: {
-    appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
-    keyVaultName: keyVaultName
-    location: location
-    storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
-    tenantId: subscription().tenantId
-  }
-  dependsOn:[
-    azAppConfigurationModule
-  ]  
-}
+// module akvModule 'KeyVault/template.bicep'={
+//   name: 'akv-${buildNumber}'
+//   params: {
+//     appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
+//     keyVaultName: keyVaultName
+//     location: location
+//     storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
+//     tenantId: subscription().tenantId
+//   }
+//   dependsOn:[
+//     azAppConfigurationModule
+//   ]  
+// }
 
 module azAppConfigurationModule 'Configuration/template.bicep'={
   name: 'azAppConfig-${buildNumber}'
@@ -89,7 +89,12 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     azConfigName: azConfigName
     location: location
     apiEnvironment:apiEnvironment
-  }  
+    keyVaultName:keyVaultName
+    storageConnectionString:storageAccountModule.outputs.storageAccountConnectionString
+  }
+  dependsOn:[
+    storageAccountModule
+  ]
 }
 
 // module roleAssignmentModule 'RoleAssignments/template.bicep'={

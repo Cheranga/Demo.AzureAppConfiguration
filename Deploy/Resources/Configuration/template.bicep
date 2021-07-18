@@ -1,12 +1,18 @@
 param azConfigName string
 param location string
 param apiEnvironment string
+param keyVaultName string
+
+@secure()
+param storageConnectionString string
 
 var featureFlagValue = {
   id: 'searchCustomerById'
   description: 'search customer by id'
   enabled: true
 }
+
+var tenantId = subscription().subscriptionId
 
 resource azconfig_resource 'Microsoft.AppConfiguration/configurationStores@2021-03-01-preview'={
   name: azConfigName
@@ -44,5 +50,47 @@ resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2
   ]
 }
 
+resource keyVault 'Microsoft.KeyVault/vaults@2016-10-01' = {
+  name: keyVaultName
+  location: location
+  properties: {
+    enabledForDeployment: true
+    enabledForTemplateDeployment: true
+    enabledForDiskEncryption: true
+    tenantId: tenantId
+    accessPolicies: [
+      {
+        tenantId: tenantId
+        objectId: azconfig_resource.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+          ]
+        }
+      }      
+    ]
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
+  }
+  dependsOn:[
+    azconfig_resource
+  ] 
+}
+
+
+resource dbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+  name: '${keyVaultName}/storageConnectionString'
+  properties: {
+    value: storageConnectionString
+  }
+  dependsOn:[
+    keyVault
+  ]
+}
+
+output dbConnectionStringUri string = dbConnectionStringSecret.properties.secretUri
 output azConfigPrincipalId string = azconfig_resource.identity.principalId
 output azConfigResourceId string = '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.AppConfiguration/configurationStores/${azConfigName}'
