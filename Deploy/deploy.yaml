@@ -25,7 +25,7 @@ steps:
       scriptLocation: "inlineScript"
       inlineScript: |    
         az deployment group create `
-        --name ccazconfigdemo `
+        --name ccazconfigdemo-$(Build.BuildNumber) `
         --resource-group "$(rgName)" `
         --template-file "$(Pipeline.Workspace)/deploy/main.bicep" `
         --parameters "buildNumber=$(Build.BuildNumber)" `
@@ -38,8 +38,7 @@ steps:
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
-        "keyVaultName=$(keyVaultName)" `        
-        "apiName=$(apiName)"
+        "keyVaultName=$(keyVaultName)"
         
 
   - task: AzureCLI@2    
