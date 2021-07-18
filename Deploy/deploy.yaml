@@ -42,20 +42,20 @@ steps:
         "apiName=$(apiName)" `
         "azureConfigDataReader=$(azureConfigDataReader)"
 
-  # - task: AzureCLI@2    
-  #   displayName: "Set access to read Azure configurations"
-  #   inputs:
-  #     azureSubscription: "$(azureSubscription)"
-  #     scriptType: "pscore"
-  #     scriptLocation: "inlineScript"
-  #     inlineScript: |        
-  #       $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"        
-  #       $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigResourceId.value)
+  - task: AzureCLI@2    
+    displayName: "Set access to read Azure configurations"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      scriptType: "pscore"
+      scriptLocation: "inlineScript"
+      inlineScript: |        
+        $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"        
+        $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigResourceId.value)
         
-  #       $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
+        $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
         
-  #       $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
-  #       $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
+        $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
+        $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
         
-  #       az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
-  #       az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
+        az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
+        az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
