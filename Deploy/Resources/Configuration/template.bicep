@@ -14,7 +14,7 @@ var featureFlagValue = {
   enabled: true
 }
 
-var tenantId = subscription().subscriptionId
+var tenantId = subscription().tenantId
 
 resource azconfig_resource 'Microsoft.AppConfiguration/configurationStores@2021-03-01-preview'={
   name: azConfigName
