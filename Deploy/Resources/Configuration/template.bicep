@@ -43,7 +43,7 @@ resource appconfigurations 'Microsoft.AppConfiguration/configurationStores/keyVa
 
 // Feature flags
 resource appFeatures 'Microsoft.AppConfiguration/configurationStores/keyValues@2021-03-01-preview'={
-  name: '.appconfig.featureflag~2f${featureFlagValue.id}$${apiEnvironment}'
+  name: '.appconfig.featureflag~2f${featureFlagValue.id}'
   properties:{
     value:string(featureFlagValue)
     contentType:'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
