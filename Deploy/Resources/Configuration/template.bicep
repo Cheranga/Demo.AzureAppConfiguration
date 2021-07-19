@@ -11,7 +11,7 @@ param stagingWebAppId string
 param storageConnectionString string
 
 var featureFlagValue = {
-  id: 'searchCustomerById'
+  id: 'ShowSearchCustomerById'
   description: 'search customer by id'
   enabled: true
 }
