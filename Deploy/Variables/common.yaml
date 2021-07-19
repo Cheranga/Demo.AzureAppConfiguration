@@ -1,0 +1,27 @@
+variables:
+  - name: rgName
+    value: cc-rg-demo-config-$(environmentName)
+  - name: rgLocation
+    value: Australia Southeast
+  - name: planName
+    value: plan-config-$(environmentName)
+  - name: planSku
+    value: S1
+  - name: planCapacity
+    value: 1
+  - name: appInsightsName
+    value: ins-config-demo-$(environmentName)
+  - name: sgName
+    value: ccsgconfigdemo$(environmentName)
+  - name: azConfigName
+    value: appcs-custapi-$(environmentName)
+  - name: keyVaultName
+    value: kv-azconfig-$(environmentName)
+  - name: apiName
+    value: cc-demo-customersapi-$(environmentName)
+  - name: azureConfigDataReader
+    value: '516239f1-63e1-4d78-a4de-a74fb236a071'
+  - name: commonRgName
+    value: rg-azureconfig-demo
+  - name: commonAzConfigName
+    value: appcs-shared-demo 
