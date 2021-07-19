@@ -3,8 +3,7 @@ parameters:
     type: string
 
 steps:
-
-  - task: AzureCLI@2    
+  - task: AzureCLI@2
     displayName: "Create resource group"
     inputs:
       azureSubscription: "$(azureSubscription)"
@@ -17,13 +16,13 @@ steps:
           az group create -n "$(rgName)" -l "$(rgLocation)"
         }
 
-  - task: AzureCLI@2    
+  - task: AzureCLI@2
     displayName: "Provision resources"
     inputs:
       azureSubscription: "$(azureSubscription)"
       scriptType: "pscore"
       scriptLocation: "inlineScript"
-      inlineScript: |    
+      inlineScript: |
         az deployment group create `
         --name ccazconfigdemo-$(Build.BuildNumber) `
         --resource-group "$(rgName)" `
@@ -37,29 +36,29 @@ steps:
         "appInsightsName=$(appInsightsName)" `
         "sgName=$(sgName)" `
         "azConfigName=$(azConfigName)" `
+        "userId=$(userId)" `
         "commonRgName=$(commonRgName)" `
         "commonAzConfigName=$(commonAzConfigName)" `
         "apiEnvironment=$(apiEnvironment)" `
         "keyVaultName=$(keyVaultName)" `
         "apiName=$(apiName)"
-        
 
-  - task: AzureCLI@2    
+  - task: AzureCLI@2
     displayName: "Set access to read Azure configurations"
     inputs:
       azureSubscription: "$(azureSubscription)"
       scriptType: "pscore"
       scriptLocation: "inlineScript"
-      inlineScript: |        
+      inlineScript: |
         $azConfigDeployment = "azAppConfig"+"-"+"${{parameters.buildNumber}}"        
         $appConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigResourceId.value)
         $commonAppConfigId=$(az deployment group show -g "$(rgName)" -n "$azConfigDeployment" --query properties.outputs.azConfigCommonResourceId.value)
-        
+
         $apiDeployment = "customersapi"+"-"+"${{parameters.buildNumber}}"
-        
+
         $apiProductionId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.productionApiPrincipalId.value)
         $apiStagingId=$(az deployment group show -g "$(rgName)" -n "$apiDeployment" --query properties.outputs.stagingApiPrincipalId.value)
-        
+
         az role assignment create --role "App Configuration Data Reader" --assignee $apiProductionId --scope $appConfigId
         az role assignment create --role "App Configuration Data Reader" --assignee $apiStagingId --scope $appConfigId
 
@@ -104,4 +103,4 @@ steps:
       webAppName: "cc-demo-customersapi-$(environmentName)"
       specifySlotOrASE: true
       resourceGroupName: "$(rgName)"
-      slot: staging        
+      slot: staging
