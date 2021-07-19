@@ -12,10 +12,12 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
+        private readonly SecretMessageConfiguration _secretMessageConfiguration;
 
-        public CustomersController(ICustomerService customerService)
+        public CustomersController(ICustomerService customerService, SecretMessageConfiguration secretMessageConfiguration)
         {
             _customerService = customerService;
+            _secretMessageConfiguration = secretMessageConfiguration;
         }
 
         [FeatureGate(ApplicationFeatures.ShowSearchCustomerById)]
@@ -29,7 +31,11 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
             };
 
             var operation = await _customerService.SearchCustomerAsync(request);
-            return Ok(operation.Data);
+            return Ok(new
+            {
+                operation.Data,
+                _secretMessageConfiguration.Message
+            });
         }
 
         [HttpPost]

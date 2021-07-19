@@ -19,6 +19,7 @@ namespace Demo.AzureConfig.Customers.Api.Extensions
                     .ConfigureKeyVault(vaultOptions =>
                     {
                         vaultOptions.SetCredential(credentials);
+                        vaultOptions.SetSecretRefreshInterval("SecretMessageConfiguration:Message", TimeSpan.FromSeconds(10));
                     })
                     .ConfigureRefresh(refreshOptions =>
                     {

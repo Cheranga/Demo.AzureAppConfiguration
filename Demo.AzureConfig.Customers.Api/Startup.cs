@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Bootstrapper = Demo.AzureConfig.Customers.Core.Bootstrapper;
 
@@ -39,6 +40,12 @@ namespace Demo.AzureConfig.Customers.Api
         private void RegisterApiServices(IServiceCollection services)
         {
             services.AddScoped<ICustomerService, CustomerService>();
+
+            services.AddScoped(provider =>
+            {
+                var secretMessageConfiguration = Configuration.GetSection(nameof(SecretMessageConfiguration)).Get<SecretMessageConfiguration>();
+                return secretMessageConfiguration;
+            });
         }
 
         private void RegisterMediators(IServiceCollection services)
