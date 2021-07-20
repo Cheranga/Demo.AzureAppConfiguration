@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Demo.AzureConfig.Customers.Api.API.Services;
 using Demo.AzureConfig.Customers.Core.Application;
@@ -36,6 +37,14 @@ namespace Demo.AzureConfig.Customers.Api.Controllers
                 operation.Data,
                 _secretMessageConfiguration.Message
             });
+        }
+
+        [FeatureGate(ApplicationFeatures.CanDelete)]
+        [HttpDelete("{customerId}")]
+        public async Task<IActionResult> DeleteCustomerAsync([FromRoute] string customerId)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            return Ok();
         }
 
         [HttpPost]
