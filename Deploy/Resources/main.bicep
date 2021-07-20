@@ -21,6 +21,7 @@ param azConfigName string
 
 // Key vault
 param keyVaultName string
+param userId string
 
 // Customers API
 param apiEnvironment string
@@ -70,20 +71,6 @@ module apiModule 'API/template.bicep'={
   ]  
 }
 
-// module akvModule 'KeyVault/template.bicep'={
-//   name: 'akv-${buildNumber}'
-//   params: {
-//     appConfigPrincipalId: azAppConfigurationModule.outputs.azConfigPrincipalId
-//     keyVaultName: keyVaultName
-//     location: location
-//     storageConnectionString: storageAccountModule.outputs.storageAccountConnectionString
-//     tenantId: subscription().tenantId
-//   }
-//   dependsOn:[
-//     azAppConfigurationModule
-//   ]  
-// }
-
 module azAppConfigurationModule 'Configuration/template.bicep'={
   name: 'azAppConfig-${buildNumber}'
   params: {
@@ -96,6 +83,7 @@ module azAppConfigurationModule 'Configuration/template.bicep'={
     commonAzConfigName:commonAzConfigName
     prodWebAppId:apiModule.outputs.productionApiPrincipalId
     stagingWebAppId:apiModule.outputs.stagingApiPrincipalId
+    userId:userId
   }
   dependsOn:[
     storageAccountModule
